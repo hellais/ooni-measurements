@@ -20,9 +20,9 @@ except:
 
 from flasgger import Swagger
 
-from flask_mail import Mail  # debdeps: python3-flask-mail
+#from flask_mail import Mail  # debdeps: python3-flask-mail
 
-from flask_security import Security  # debdeps: python3-flask-security
+#from flask_security import Security  # debdeps: python3-flask-security
 
 from decimal import Decimal
 from ooniapi.database import init_db
@@ -62,9 +62,15 @@ def validate_conf(app, conffile):
         "COLLECTORS",
         "DATABASE_STATEMENT_TIMEOUT",
         "DATABASE_URI_RO",
+        "GITHUB_ORIGIN_REPO",
+        "GITHUB_PUSH_REPO",
+        "GITHUB_TOKEN",
+        "GITHUB_WORKDIR",
+        "JWT_ENCRYPTION_KEY",
         "MAIL_PASSWORD",
         "MAIL_PORT",
         "MAIL_SERVER",
+        "MAIL_SOURCE_ADDRESS",
         "MAIL_USERNAME",
         "MAIL_USE_SSL",
         "MSMT_SPOOL_DIR",
@@ -87,6 +93,7 @@ def init_app(app, testmode=False):
     log = logging.getLogger("ooni-api")
     app.config.from_object("ooniapi.config")
     conffile = os.getenv("CONF", "/etc/ooni/api.conf")
+    # conffile = os.getenv("CONF", "/root/tests/integ/api.conf")
     if enable_journal:
         log.addHandler(JournalHandler(SYSLOG_IDENTIFIER="ooni-api"))
     log.setLevel(logging.DEBUG)
@@ -161,9 +168,9 @@ def create_app(*args, testmode=False, **kw):
 
     Swagger(app, parse=True)
 
-    mail = Mail(app)
+    #mail = Mail(app)
 
-    security = Security(app, app.db_session)
+    # security = Security(app, app.db_session)
 
     # FIXME
     views.register(app)

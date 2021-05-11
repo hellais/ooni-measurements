@@ -48,3 +48,7 @@ def client(app):
             top.pop()
         else:
             break
+
+
+def pytest_addoption(parser):
+    parser.addoption("--ghpr", action="store_true", help="enable GitHub integ tests")
